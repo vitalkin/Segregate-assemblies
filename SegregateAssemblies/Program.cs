@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Windows.Forms;
 
 namespace SegregateAssemblies
 {
@@ -17,7 +13,7 @@ namespace SegregateAssemblies
 
             foreach (var executable in Directory.GetFiles(Directory.GetCurrentDirectory(), "*.exe"))
             {
-                if (executable == Assembly.GetExecutingAssembly().Location)
+                if (executable.ToLower() == Assembly.GetExecutingAssembly().Location.ToLower())
                 {
                     continue;
                 }
@@ -43,7 +39,7 @@ namespace SegregateAssemblies
 
                 foreach (var file in files)
                 {
-                    File.Copy(file, di.FullName + "\\" + Path.GetFileName(file));
+                    File.Copy(file, di.FullName + "\\" + Path.GetFileName(file), true);
                 }
 
                 files.Clear();
